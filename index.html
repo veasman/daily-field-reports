@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Field Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media (max-width: 640px) {
+      h1 { font-size: 1.75rem; }
+      h2 { font-size: 1.125rem; }
+      body { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen">
+  <div class="max-w-3xl mx-auto py-6 px-4">
+    <h1 class="text-3xl font-bold mb-6 text-center">Daily Field Reports</h1>
+
+    <div class="flex justify-center mb-6">
+      <select id="monthSelect" class="p-2 rounded border border-gray-300 shadow-sm focus:ring focus:ring-blue-300">
+        <option value="all">All Months</option>
+      </select>
+    </div>
+
+    <div id="reports-container" class="space-y-4"></div>
+  </div>
+
+  <script>
+    async function getReports() {
+      const reports = await fetch("reports.json").then(r => r.json()).catch(() => []);
+      const files = await fetch("attachments/index.json").then(r => r.json()).catch(() => []);
+
+      // Parse CSV attachment dates
+      const attachments = files.map(f => {
+        const match = f.name.match(/^(\d{2})-(\d{2})-(\d{4})/);
+        if (!match) return null;
+        const [, mm, dd, yyyy] = match;
+        const date = `${yyyy}-${mm}-${dd}`;
+        return {
+          fileDate: new Date(date),
+          url: `attachments/${f.name}`,
+          filename: f.name
+        };
+      }).filter(Boolean);
+
+      // Match reports to previous-day CSVs
+      reports.forEach(report => {
+        const reportDate = new Date(report.date);
+        const prevDay = new Date(reportDate);
+        prevDay.setDate(prevDay.getDate() - 1);
+
+        const match = attachments.find(att => {
+          const diff = Math.abs(att.fileDate - prevDay);
+          return diff < 1000 * 60 * 60 * 24;
+        });
+
+        if (match) {
+          report.attachment = match.url;
+          report.filename = match.filename;
+        }
+      });
+
+      // Add unattached CSVs as standalone entries
+      attachments.forEach(att => {
+        const used = reports.some(r => r.filename === att.filename);
+        if (!used) {
+          reports.push({
+            date: att.fileDate.toISOString().split("T")[0],
+            sections: {},
+            attachment: att.url,
+            filename: att.filename
+          });
+        }
+      });
+
+      reports.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return reports;
+    }
+
+    function groupByMonth(reports) {
+      return reports.reduce((acc, report) => {
+        const d = new Date(report.date);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(report);
+        return acc;
+      }, {});
+    }
+
+    async function renderReports() {
+      const container = document.getElementById("reports-container");
+      const monthSelect = document.getElementById("monthSelect");
+      const reports = await getReports();
+      const grouped = groupByMonth(reports);
+      const monthKeys = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+
+      // Populate dropdown
+      monthKeys.forEach(k => {
+        const d = new Date(k + "-01");
+        const opt = document.createElement("option");
+        opt.value = k;
+        opt.textContent = d.toLocaleString("default", { month: "long", year: "numeric" });
+        monthSelect.appendChild(opt);
+      });
+
+      function render(month = "all") {
+        container.innerHTML = "";
+        const monthsToShow = month === "all" ? monthKeys : [month];
+
+        monthsToShow.forEach(mk => {
+          const d = new Date(mk + "-01");
+          const title = d.toLocaleString("default", { month: "long", year: "numeric" });
+          const header = document.createElement("h2");
+          header.className = "text-xl font-semibold mt-6 mb-2";
+          header.textContent = title;
+          container.appendChild(header);
+
+          grouped[mk].forEach(report => {
+            const div = document.createElement("div");
+            div.className = "bg-white shadow rounded-2xl p-4 hover:shadow-lg transition";
+
+            let html = `<h3 class="text-lg font-semibold mb-2">${new Date(report.date).toLocaleDateString()}</h3>`;
+
+            for (const [title, items] of Object.entries(report.sections || {})) {
+              html += `
+                <h4 class="font-semibold text-gray-700 mb-1">${title}</h4>
+                <ul class="list-disc ml-6 mb-3 space-y-1 text-gray-800">
+                  ${items.map(i => `<li>${i}</li>`).join("")}
+                </ul>`;
+            }
+
+            if (report.attachment) {
+              html += `
+                <div class="mt-3 text-sm text-gray-700">
+                  <span class="block">QC Report for <b>${report.filename.match(/^(\d{2}-\d{2}-\d{4})/)[1]}</b></span>
+                  <a href="${report.attachment}" class="text-blue-600 hover:underline">
+                    📎 Download ${report.filename}
+                  </a>
+                </div>`;
+            }
+
+            div.innerHTML = html;
+            container.appendChild(div);
+          });
+        });
+      }
+
+      monthSelect.addEventListener("change", e => render(e.target.value));
+      render();
+    }
+
+    renderReports();
+  </script>
+</body>
+</html>

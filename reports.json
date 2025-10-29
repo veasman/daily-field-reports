@@ -1,0 +1,21 @@
+[
+
+    {
+        "date": "2025-10-29",
+        "sections": {
+            "Errors caught from automation": [
+                "2 dots with cardinal direction in street_name instead of street_dir",
+                "1 dot with missing street name (street name was put into the \"city\" column)"
+            ],
+            "Other issues": [
+                "Lots of confusion due to Brockway St/Payne St dots having wrong street name and no measurements. Caused some issues making sure I was looking at the right video for a dot",
+                "Had to rename a lot of the street names on the right side from Brockway St to Payne St",
+                "Would have been easier to confirm these videos belong to those dots if measurements were noted on the dot",
+                "These dots were done by 1700"
+            ],
+            "Extra Notes": [
+                "Today's QC report will not have data as it was generated after all issues were fixed"
+            ]
+        }
+    }
+]
