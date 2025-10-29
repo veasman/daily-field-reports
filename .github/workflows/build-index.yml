@@ -5,6 +5,9 @@ on:
     paths:
       - "attachments/*.csv"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
