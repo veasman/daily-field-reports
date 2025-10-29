@@ -1,9 +1,13 @@
-name: Build Attachment Index
+name: Build Attachments Index
 
 on:
   push:
     paths:
-      - "attachments/*.csv"
+      - "attachments/**"
+      - "reports.json"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
 
 permissions:
   contents: write
@@ -13,15 +17,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Generate attachments index
         run: |
+          mkdir -p attachments
           node -e "
             const fs = require('fs');
-            const files = fs.readdirSync('attachments')
+            const path = require('path');
+            const dir = 'attachments';
+            const files = fs.readdirSync(dir)
               .filter(f => f.endsWith('.csv'))
               .map(f => ({ name: f }));
-            fs.writeFileSync('attachments/index.json', JSON.stringify(files, null, 2));
+            fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(files, null, 2));
+            console.log('✅ Generated attachments/index.json with', files.length, 'files.');
           "
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update attachments index"
