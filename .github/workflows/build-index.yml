@@ -1,19 +1,28 @@
-name: Build Attachments Index
+name: Build & Deploy Site
 
 on:
   push:
+    branches: [ "main" ]
     paths:
       - "attachments/**"
       - "reports.json"
+      - "index.html"
+      - ".github/workflows/build-deploy.yml"
   workflow_dispatch:
   schedule:
     - cron: "0 6 * * *"
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build:
+  build-index:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,3 +46,16 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update attachments index"
+
+  deploy:
+    needs: build-index
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+      - id: deployment
+        uses: actions/deploy-pages@v4
