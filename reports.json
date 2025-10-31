@@ -1,6 +1,18 @@
 [
 
     {
+        "date": "2025-10-30",
+        "sections": {
+            "Errors caught from automation": [
+                "1033 A S Payne St is missing a phase number, and is also placed oddly",
+                "MH 1001 S Payne to 1001 S Brockway St missing site photo"
+            ],
+            "Extra Notes": [
+                "Not really any issues today besides the two listed above"
+            ]
+        }
+    },
+    {
         "date": "2025-10-29",
         "sections": {
             "Errors caught from automation": [

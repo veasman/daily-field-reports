@@ -1,0 +1,3 @@
+Date,Truck,Address,Building,Street Dir,Street Name,City,Error Message
+2025-10-29,1700,1033,A,South,PAYNE ST,OLATHE,Phase is empty - should be '0401' for Kansas
+2025-10-29,1700,1001 S PAYNE ST MH,1001 S BROCKWAY ST,South,PAYNE ST,OLATHE,PV stage is 'PRECON COMPLETE' but site_photo is empty
