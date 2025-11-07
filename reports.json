@@ -3,7 +3,7 @@
         "date": "2025-11-07",
         "sections": {
             "Errors caught from automation": [
-                "1700 had some missing map photos",
+                "1700 had some missing map photos, Carter noted they don't need them since they are just remarks",
                 "1700 had many entries where there was a street name in the address column"
             ]
         }
