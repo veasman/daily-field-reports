@@ -80,8 +80,9 @@
 
     function groupByMonth(reports) {
       return reports.reduce((acc, report) => {
-        const d = new Date(report.date);
-        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+        // Use the date string parts directly instead of Date object to avoid timezone issues
+        const [year, month] = report.date.split('-');
+        const key = `${year}-${month}`;
         if (!acc[key]) acc[key] = [];
         acc[key].push(report);
         return acc;
@@ -97,10 +98,12 @@
 
       // Populate dropdown
       monthKeys.forEach(k => {
-        const d = new Date(k + "-01");
+        const [year, month] = k.split('-');
+        // Create date with UTC to avoid timezone issues
+        const d = new Date(Date.UTC(year, month - 1, 1));
         const opt = document.createElement("option");
         opt.value = k;
-        opt.textContent = d.toLocaleString("default", { month: "long", year: "numeric" });
+        opt.textContent = d.toLocaleString("default", { month: "long", year: "numeric", timeZone: 'UTC' });
         monthSelect.appendChild(opt);
       });
 
@@ -109,8 +112,10 @@
         const monthsToShow = month === "all" ? monthKeys : [month];
 
         monthsToShow.forEach(mk => {
-          const d = new Date(mk + "-01");
-          const title = d.toLocaleString("default", { month: "long", year: "numeric" });
+          const [year, month] = mk.split('-');
+          // Create date with UTC to avoid timezone issues
+          const d = new Date(Date.UTC(year, month - 1, 1));
+          const title = d.toLocaleString("default", { month: "long", year: "numeric", timeZone: 'UTC' });
           const header = document.createElement("h2");
           header.className = "text-xl font-semibold mt-6 mb-2";
           header.textContent = title;
