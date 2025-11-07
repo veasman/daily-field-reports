@@ -1,0 +1,15 @@
+Date,Truck,Address,Building,Street Dir,Street Name,City,Error Message
+2025-11-06,1700,526 CHESTNUT ST,,,CHESTNUT ST,STRONG CITY,Address '526 CHESTNUT ST' should be parsed into components
+2025-11-06,1700,526 CHESTNUT ST,TO SOUTH,,CHESTNUT ST,STRONG CITY,Address '526 CHESTNUT ST' should be parsed into components
+2025-11-06,1700,519 COTTONWOOD ST,,,COTTONWOOD ST,STRONG CITY,Address '519 COTTONWOOD ST' should be parsed into components
+2025-11-06,1700,516 CHESTNUT ST,TO NORTH,,CHESTNUT ST,STRONG CITY,Address '516 CHESTNUT ST' should be parsed into components
+2025-11-06,1700,516 CHESTNUT ST,,,CHESTNUT ST,STRONG CITY,Address '516 CHESTNUT ST' should be parsed into components
+2025-11-06,1700,523,,,COTTONWOOD ST,STRONG CITY,PV stage is 'PRECON COMPLETE' but photo_of_map is empty
+2025-11-06,1700,MH 536 CHESTNUT ST,TO EAST,,CHESTNUT ST,STRONG CITY,"PV stage is 'PRECON COMPLETE' but photo_of_map, site_photo is empty"
+2025-11-06,1700,526 CHESTNUT ST,,,CHESTNUT ST,STRONG CITY,PV stage is 'PRECON COMPLETE' but photo_of_map is empty
+2025-11-06,1700,526 CHESTNUT ST,TO SOUTH,,CHESTNUT ST,STRONG CITY,"PV stage is 'PRECON COMPLETE' but photo_of_map, site_photo is empty"
+2025-11-06,1700,519 COTTONWOOD ST,,,COTTONWOOD ST,STRONG CITY,PV stage is 'PRECON COMPLETE' but photo_of_map is empty
+2025-11-06,1700,516 CHESTNUT ST,TO NORTH,,CHESTNUT ST,STRONG CITY,"PV stage is 'PRECON COMPLETE' but photo_of_map, site_photo is empty"
+2025-11-06,1700,516 CHESTNUT ST,,,CHESTNUT ST,STRONG CITY,PV stage is 'PRECON COMPLETE' but photo_of_map is empty
+2025-11-06,2400,MH 423 W CHEROKEE ST ,ML NORTH,West,CHEROKEE ST,SEDAN ,PV stage is 'PRECON COMPLETE' but site_photo is empty
+2025-11-06,1071,523 ,,West,Park ST,OLATHE ,PV stage is 'PRECON COMPLETE' but photo_of_map is empty

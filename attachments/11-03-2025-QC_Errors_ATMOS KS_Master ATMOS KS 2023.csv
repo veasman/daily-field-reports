@@ -1,0 +1,8 @@
+Date,Truck,Address,Building,Street Dir,Street Name,City,Error Message
+2025-11-03,1700,1017,,South,S BROCKWAY ST,OLATHE ,Street name contains direction prefix or number word
+2025-11-03,5200,MH 1301 W DENNIS AVE,MH 1003 S PROVENCE ST,,,OLATHE,Street name is empty
+2025-11-03,1700,1021,,South,S PITT ST,OLATHE ,Street name contains direction prefix or number word
+2025-11-03,1700,1160,,South,S ROBINSON DR,OLATHE ,Street name contains direction prefix or number word
+2025-11-03,1700,1021,A,South,S 5TH ST,OLATHE ,Street name contains direction prefix or number word
+2025-11-03,1700,MH 1001 S BROCKWAY ST ,MH 1017 S BROCKWAY ST,South,S BROCKWAY ST,OLATHE ,Street name contains direction prefix or number word
+2025-11-03,1700,1500,,South,S ROBINSON DR,OLATHE ,Street name contains direction prefix or number word
