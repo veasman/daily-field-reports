@@ -1,5 +1,13 @@
 [
     {
+        "date": "2025-11-10",
+        "sections": {
+            "Notes": [
+                "No work from 1700 Friday or Saturday, no QC report will be attached for today"
+            ]
+        }
+    },
+    {
         "date": "2025-11-07",
         "sections": {
             "Errors caught from automation": [
