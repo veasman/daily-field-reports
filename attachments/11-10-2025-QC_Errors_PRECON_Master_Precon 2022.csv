@@ -1,0 +1,4 @@
+Date,Truck,Address,Building,Street Dir,Street Name,City,Error Message
+2025/11/10,,MH 4812 PARK AVE,TO ML SOUTH,,PARK AVE,KC MO,Phase '805540' should be exactly 8 characters (found 6)
+2025/11/10,350,5913,,,HUNTER ST,RAYTOWN,Inspector email 'dberry@npl.com' is invalid for precon
+2025/11/10,?,MH 4812 PARK AVE,TO ML SOUTH,,PARK AVE,KC MO,Cleared by employee is empty (cleared_by_employee column)
